@@ -3,17 +3,17 @@ import { Link } from 'react-router'
 
 const Footer = () => {
     return (
-        <footer className="bg-white">
+        <footer className="bg-primary-foreground text-muted-foreground">
             <div className="mx-auto container space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-0">
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>
-                        <div className="text-teal-600">
+                        <div>
                             <Link to="/">
                                 <Logo />
                             </Link>
                         </div>
 
-                        <p className="mt-4 max-w-xs text-gray-500">
+                        <p className="mt-4 max-w-xs">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
                             molestias.
                         </p>
@@ -24,7 +24,7 @@ const Footer = () => {
                                     href="#"
                                     rel="noreferrer"
                                     target="_blank"
-                                    className="text-gray-700 transition hover:opacity-75"
+                                    className="transition hover:opacity-75"
                                 >
                                     <span className="sr-only">Facebook</span>
 
@@ -43,7 +43,7 @@ const Footer = () => {
                                     href="#"
                                     rel="noreferrer"
                                     target="_blank"
-                                    className="text-gray-700 transition hover:opacity-75"
+                                    className="transition hover:opacity-75"
                                 >
                                     <span className="sr-only">Instagram</span>
 
@@ -62,7 +62,7 @@ const Footer = () => {
                                     href="#"
                                     rel="noreferrer"
                                     target="_blank"
-                                    className="text-gray-700 transition hover:opacity-75"
+                                    className="transition hover:opacity-75"
                                 >
                                     <span className="sr-only">Twitter</span>
 
@@ -79,7 +79,7 @@ const Footer = () => {
                                     href="#"
                                     rel="noreferrer"
                                     target="_blank"
-                                    className="text-gray-700 transition hover:opacity-75"
+                                    className="transition hover:opacity-75"
                                 >
                                     <span className="sr-only">GitHub</span>
 
@@ -98,7 +98,7 @@ const Footer = () => {
                                     href="#"
                                     rel="noreferrer"
                                     target="_blank"
-                                    className="text-gray-700 transition hover:opacity-75"
+                                    className="transition hover:opacity-75"
                                 >
                                     <span className="sr-only">Dribbble</span>
 
@@ -116,85 +116,85 @@ const Footer = () => {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
                         <div>
-                            <p className="font-medium text-gray-900">Services</p>
+                            <p className="font-medium text-accent-foreground">Services</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> 1on1 Coaching </a>
+                                    <a href="#" className="transition hover:opacity-75"> 1on1 Coaching </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Company Review </a>
+                                    <a href="#" className="transition hover:opacity-75"> Company Review </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Accounts Review </a>
+                                    <a href="#" className="transition hover:opacity-75"> Accounts Review </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> HR Consulting </a>
+                                    <a href="#" className="transition hover:opacity-75"> HR Consulting </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> SEO Optimisation </a>
+                                    <a href="#" className="transition hover:opacity-75"> SEO Optimisation </a>
                                 </li>
                             </ul>
                         </div>
 
                         <div>
-                            <p className="font-medium text-gray-900">Company</p>
+                            <p className="font-medium text-accent-foreground">Company</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> About </a>
+                                    <a href="#" className="transition hover:opacity-75"> About </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Meet the Team </a>
+                                    <a href="#" className="transition hover:opacity-75"> Meet the Team </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Accounts Review </a>
+                                    <a href="#" className="transition hover:opacity-75"> Accounts Review </a>
                                 </li>
                             </ul>
                         </div>
 
                         <div>
-                            <p className="font-medium text-gray-900">Helpful Links</p>
+                            <p className="font-medium text-accent-foreground">Helpful Links</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Contact </a>
+                                    <a href="#" className="transition hover:opacity-75"> Contact </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> FAQs </a>
+                                    <a href="#" className="transition hover:opacity-75"> FAQs </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Live Chat </a>
+                                    <a href="#" className="transition hover:opacity-75"> Live Chat </a>
                                 </li>
                             </ul>
                         </div>
 
                         <div>
-                            <p className="font-medium text-gray-900">Legal</p>
+                            <p className="font-medium text-accent-foreground">Legal</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Accessibility </a>
+                                    <a href="#" className="transition hover:opacity-75"> Accessibility </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Returns Policy </a>
+                                    <a href="#" className="transition hover:opacity-75"> Returns Policy </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75"> Refund Policy </a>
+                                    <a href="#" className="transition hover:opacity-75"> Refund Policy </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-gray-700 transition hover:opacity-75">
+                                    <a href="#" className="transition hover:opacity-75">
                                         Hiring-3 Statistics
                                     </a>
                                 </li>
