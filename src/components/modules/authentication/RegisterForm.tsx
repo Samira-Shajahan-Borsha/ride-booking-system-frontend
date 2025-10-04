@@ -11,7 +11,7 @@ import {
     FieldDescription,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 
 import {
     Form,
@@ -21,17 +21,19 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
+import { useForm, type SubmitHandler } from "react-hook-form"
 
 import {
     RadioGroup,
     RadioGroupItem,
 } from "@/components/ui/radio-group"
 
-import { z } from "zod"
+import { email, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { role } from "@/constants/role"
 import Password from "@/components/ui/password"
+import { useRegisterMutation } from "@/redux/features/auth/auth.Api"
+import { toast } from "sonner"
 
 const registerFormSchema = z.object({
     name: z
@@ -53,13 +55,24 @@ const registerFormSchema = z.object({
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Password do not match",
     path: ["confirmPassword"],
-})
+});
 
+type TInput = {
+    name: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
+    role: string
+}
 
 export function RegisterForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
+
+    const [register] = useRegisterMutation();
+
+    const navigate = useNavigate();
 
     const form = useForm<z.infer<typeof registerFormSchema>>({
         resolver: zodResolver(registerFormSchema),
@@ -72,8 +85,27 @@ export function RegisterForm({
         },
     });
 
-    const onSubmit = async (data: z.infer<typeof registerFormSchema>) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<TInput> = async (data: z.infer<typeof registerFormSchema>) => {
+        const toastId = toast.loading("Creating user....");
+
+        const userInfo = {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            role: data.role
+        }
+
+        try {
+            const response = await register(userInfo).unwrap();
+            // console.log("register response", response);
+
+            if (response.success) {
+                toast.success("User registered successfully", { id: toastId });
+                navigate("/login");
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -182,10 +214,6 @@ export function RegisterForm({
                     </Form>
                 </CardContent>
             </Card>
-            <FieldDescription className="px-6 text-center">
-                By clicking continue, you agree to our <Link to="/">Terms of Service</Link>{" "}
-                and <Link to="/">Privacy Policy</Link>.
-            </FieldDescription>
         </div>
     )
 }
