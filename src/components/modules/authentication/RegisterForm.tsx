@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -65,10 +64,7 @@ type TInput = {
     role: string
 }
 
-export function RegisterForm({
-    className,
-    ...props
-}: React.ComponentProps<"div">) {
+export function RegisterForm() {
 
     const [register] = useRegisterMutation();
 
@@ -98,6 +94,8 @@ export function RegisterForm({
         try {
             const response = await register(userInfo).unwrap();
 
+            console.log(response)
+
             if (response.success) {
                 toast.success("User registered successfully", { id: toastId });
                 navigate("/login");
@@ -124,115 +122,113 @@ export function RegisterForm({
     }
 
     return (
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <Card>
-                <CardHeader className="text-center">
-                    <CardTitle className="text-xl">Create your account</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Full Name</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="John Doe" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+        <Card>
+            <CardHeader className="text-center">
+                <CardTitle className="text-xl">Create your account</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 md:space-y-6" id="">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Full Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Full Name" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input type="email" placeholder="john.doe@company.com" {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input type="email" placeholder="Email" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Password {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Password {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                            <FormField
-                                control={form.control}
-                                name="confirmPassword"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Confirm Password</FormLabel>
-                                        <FormControl>
-                                            <Password {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <FormField
+                            control={form.control}
+                            name="confirmPassword"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormControl>
+                                        <Password {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                            <FormField
-                                control={form.control}
-                                name="role"
-                                render={({ field }) => (
-                                    <FormItem className="space-y-3">
-                                        <FormLabel>Register as</FormLabel>
-                                        <FormControl>
-                                            <RadioGroup
-                                                onValueChange={field.onChange}
-                                                value={field.value}
-                                                className="flex flex-col"
-                                            >
-                                                <FormItem className="flex items-center gap-3">
-                                                    <FormControl>
-                                                        <RadioGroupItem value={role.rider} />
-                                                    </FormControl>
-                                                    <FormLabel className="font-normal">Rider</FormLabel>
-                                                </FormItem>
-                                                <FormItem className="flex items-center gap-3">
-                                                    <FormControl>
-                                                        <RadioGroupItem value={role.driver} />
-                                                    </FormControl>
-                                                    <FormLabel className="font-normal">Driver</FormLabel>
-                                                </FormItem>
-                                            </RadioGroup>
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                        <FormField
+                            control={form.control}
+                            name="role"
+                            render={({ field }) => (
+                                <FormItem className="space-y-3">
+                                    <FormLabel>Register as</FormLabel>
+                                    <FormControl>
+                                        <RadioGroup
+                                            onValueChange={field.onChange}
+                                            value={field.value}
+                                            className="flex flex-col"
+                                        >
+                                            <FormItem className="flex items-center gap-3">
+                                                <FormControl>
+                                                    <RadioGroupItem value={role.rider} />
+                                                </FormControl>
+                                                <FormLabel className="font-normal">Rider</FormLabel>
+                                            </FormItem>
+                                            <FormItem className="flex items-center gap-3">
+                                                <FormControl>
+                                                    <RadioGroupItem value={role.driver} />
+                                                </FormControl>
+                                                <FormLabel className="font-normal">Driver</FormLabel>
+                                            </FormItem>
+                                        </RadioGroup>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                            {
-                                form.formState.errors.root && <p className="text-destructive text-sm">{form.formState.errors.root.message}</p>
-                            }
+                        {
+                            form.formState.errors.root && <p className="text-destructive text-sm">{form.formState.errors.root.message}</p>
+                        }
 
-                            <Field>
-                                <Button type="submit">Create Account</Button>
-                                <FieldDescription className="text-center">
-                                    Already have an account? <Link to="/login">Sign in</Link>
-                                </FieldDescription>
-                            </Field>
-                        </form>
-                    </Form>
-                </CardContent>
-            </Card>
-        </div>
+                        <Field>
+                            <Button type="submit" className="w-full cursor-pointer">Create Account</Button>
+                            <FieldDescription className="text-center">
+                                Already have an account? <Link to="/login">Sign in</Link>
+                            </FieldDescription>
+                        </Field>
+                    </form>
+                </Form>
+            </CardContent>
+        </Card>
     )
 }

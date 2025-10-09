@@ -13,7 +13,7 @@ createRoot(document.getElementById('root')!).render(
     <ReduxProvider store={store}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <RouterProvider router={router} />
-        <Toaster richColors />
+        <Toaster richColors position='top-right'/>
       </ThemeProvider>
     </ReduxProvider>
   </StrictMode>,
