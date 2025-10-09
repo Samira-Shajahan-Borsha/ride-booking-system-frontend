@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate } from "react-router"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, type SubmitHandler } from "react-hook-form"
 import { z } from "zod"
 
 import {
@@ -28,12 +28,16 @@ import { useLoginMutation } from "@/redux/features/auth/auth.Api"
 import { toast } from "sonner"
 
 const loginFormSchema = z.object({
-    email: z.email({ pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, error: "Password is required" }),
+    email: z.email({ pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, error: "Email is required" }),
     password: z
         .string()
         .min(8, "Password is required")
 });
 
+type TInput = {
+    email: string,
+    password: string,
+}
 
 export function LoginForm() {
 
@@ -49,19 +53,24 @@ export function LoginForm() {
         },
     });
 
-    const onSubmit = async (data: z.infer<typeof loginFormSchema>) => {
+    const onSubmit: SubmitHandler<TInput> = async (data: z.infer<typeof loginFormSchema>) => {
         const toastId = toast.loading("Signing in...");
 
         try {
             const response = await login(data).unwrap();
-            console.log(response);
 
             if (response.success) {
                 toast.success("User logged in successfully", { id: toastId });
                 navigate("/");
             }
-        } catch (error) {
-            console.log(error)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            toast.dismiss(toastId);
+            if (error.data.message === "Incorrect password") {
+                form.setError("password", {
+                    message: "Incorrect password"
+                })
+            }
         }
     }
 

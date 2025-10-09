@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/popover"
 import { Link } from "react-router"
 import { ModeToggler } from "./ModeToggler"
+import { useUserInfoQuery } from "@/redux/features/auth/auth.Api"
+import UserMenu from "../ui/user-menu"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -24,6 +26,9 @@ const navigationLinks = [
 ]
 
 export default function Navbar() {
+
+  const { data, isLoading, isFetching } = useUserInfoQuery(null);
+
   return (
     <header className="border-b px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4 container mx-auto">
@@ -88,13 +93,23 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <ModeToggler />
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <Link to="/login">Sign In</Link>
-          </Button>
-          <Button asChild size="sm" className="text-sm">
-            <Link to="/register">Register</Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <ModeToggler />
+            {isLoading || isFetching ? (
+              <div className="w-20 h-8 bg-muted animate-pulse rounded" />
+            ) : data?.data?.email ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Button asChild variant="ghost" size="sm" className="text-sm">
+                  <Link to="/login">Sign In</Link>
+                </Button>
+                <Button asChild size="sm" className="text-sm">
+                  <Link to="/register">Register</Link>
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
