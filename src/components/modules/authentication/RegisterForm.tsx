@@ -28,7 +28,7 @@ import {
     RadioGroupItem,
 } from "@/components/ui/radio-group"
 
-import { email, z } from "zod"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { role } from "@/constants/role"
 import Password from "@/components/ui/password"
@@ -97,14 +97,29 @@ export function RegisterForm({
 
         try {
             const response = await register(userInfo).unwrap();
-            // console.log("register response", response);
 
             if (response.success) {
                 toast.success("User registered successfully", { id: toastId });
                 navigate("/login");
             }
-        } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
             console.log(error)
+            toast.dismiss(toastId);
+
+            const message =
+                error?.data?.message ||
+                "Something went wrong while creating your account. Please try again later.";
+
+            if (error?.status === 400 && error?.data?.message === "User with this email already exists") {
+                toast.error("This email is already registered. Please log in.", { id: toastId });
+                form.setError("email", {
+                    message: "An account with this email already exists. Try logging in instead.",
+                });
+            } else {
+                form.setError("root", { message });
+                toast.error(message, { id: toastId });
+            }
         }
     }
 
@@ -203,6 +218,10 @@ export function RegisterForm({
                                     </FormItem>
                                 )}
                             />
+
+                            {
+                                form.formState.errors.root && <p className="text-destructive text-sm">{form.formState.errors.root.message}</p>
+                            }
 
                             <Field>
                                 <Button type="submit">Create Account</Button>
