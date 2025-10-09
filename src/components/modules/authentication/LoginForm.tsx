@@ -65,12 +65,20 @@ export function LoginForm() {
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
+            console.log(error);
             toast.dismiss(toastId);
             if (error.data.message === "Incorrect password") {
                 form.setError("password", {
-                    message: "Incorrect password"
-                })
+                    message: "The email or password you entered is incorrect.",
+                });
             }
+
+            if (error.data.message === "User doesn't exist") {
+                form.setError("email", {
+                    message: "The email or password you entered is incorrect.",
+                });
+            }
+
         }
     }
 
