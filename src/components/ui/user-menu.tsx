@@ -43,7 +43,7 @@ export default function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
+        <Button variant="ghost" className="h-auto p-0 hover:bg-transparent cursor-pointer">
           <Avatar>
             <AvatarImage src="./avatar.jpg" alt="Profile image" />
             <AvatarFallback className="text-lg font-semibold">{userData?.data?.name?.charAt(0)}</AvatarFallback>

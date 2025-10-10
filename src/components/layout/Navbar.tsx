@@ -12,20 +12,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Link } from "react-router"
+import { Link, useLocation } from "react-router"
 import { ModeToggler } from "./ModeToggler"
 import { useUserInfoQuery } from "@/redux/features/auth/auth.Api"
 import UserMenu from "../ui/user-menu"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", active: true },
+  { href: "/", label: "Home" },
   { href: "/features", label: "Features" },
   { href: "/about-us", label: "About Us" },
+  { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
 ]
 
 export default function Navbar() {
+
+  const location = useLocation();
 
   const { data, isLoading, isFetching } = useUserInfoQuery(null);
 
@@ -53,7 +56,7 @@ export default function Navbar() {
                       <NavigationMenuLink
                         asChild
                         className="py-1.5"
-                        active={link.active}
+                        active={link.href === location.pathname}
                       >
                         <Link to={link.href}>
                           {link.label}
@@ -77,7 +80,7 @@ export default function Navbar() {
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       asChild
-                      active={link.active}
+                      active={link.href === location.pathname}
                       className="text-muted-foreground hover:text-primary py-1.5 font-medium"
                     >
                       <Link to={link.href}>
