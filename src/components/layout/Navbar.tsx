@@ -20,6 +20,7 @@ import UserMenu from "../ui/user-menu"
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home" },
+  { href: "/admin", label: "Dashboard" },
   { href: "/features", label: "Features" },
   { href: "/about-us", label: "About Us" },
   { href: "/contact", label: "Contact" },
