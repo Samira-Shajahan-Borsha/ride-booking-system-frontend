@@ -28,7 +28,6 @@ const navigationLinks = [
 ]
 
 export default function Navbar() {
-
   const location = useLocation();
 
   const { data, isLoading, isFetching } = useUserInfoQuery(null);

@@ -1,3 +1,5 @@
+import type { ComponentType } from "react";
+
 export type { IRegisterInfo, User, ILoginRes, ILoginInfo } from "@/types/auth.type";
 
 export interface IResponse<T> {
@@ -5,4 +7,12 @@ export interface IResponse<T> {
     statusCode: number;
     message: string;
     data: T;
+}
+
+export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER";
+
+export interface ISidebarItems {
+    title: string;
+    url: string;
+    Component: ComponentType;
 }

@@ -1,12 +1,5 @@
 import * as React from "react"
-import {
-  IconChartBar,
-  IconDashboard,
-  IconFolder,
-  IconListDetails,
-  IconUsers,
-} from "@tabler/icons-react"
-import { NavMain } from "@/components/nav-main"
+import { NavMain } from "@/components/ui/nav-main"
 import {
   Sidebar,
   SidebarContent,
@@ -16,38 +9,16 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "react-router"
 import Logo from "@/assets/icons/Logo"
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: IconDashboard,
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ]
-}
+import { useUserInfoQuery } from "@/redux/features/auth/auth.Api"
+import { getSidebarItems } from "@/utils/generateSidebarItems"
+import type { TRole } from "@/types"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const { data: userData } = useUserInfoQuery(null);
+
+  console.log(userData)
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -60,7 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={getSidebarItems(userData?.data?.role as TRole)} />
       </SidebarContent>
     </Sidebar>
   )

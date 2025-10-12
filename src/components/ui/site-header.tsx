@@ -1,6 +1,6 @@
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { ModeToggler } from "./layout/ModeToggler"
-import UserMenu from "./ui/user-menu"
+import UserMenu from "./user-menu"
+import { ModeToggler } from "../layout/ModeToggler"
 
 export function SiteHeader() {
   return (
