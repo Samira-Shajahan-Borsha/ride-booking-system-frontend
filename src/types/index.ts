@@ -9,7 +9,7 @@ export interface IResponse<T> {
     data: T;
 }
 
-export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER";
+export type TRole = "SUPER_ADMIN" | "ADMIN" | "RIDER" | "DRIVER";
 
 export interface ISidebarItems {
     title: string;
