@@ -17,8 +17,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const { data: userData } = useUserInfoQuery(null);
 
-  console.log(userData)
-
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
