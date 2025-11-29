@@ -9,8 +9,16 @@ export const rideApi = baseApi.injectEndpoints({
                 method: "POST",
                 data: rideInfo,
             }),
+            invalidatesTags: ["RIDE"],
+        }),
+        getCurrentRide: build.query<IResponse<IRide>, null>({
+            query: () => ({
+                url: "/rides/current-ride",
+                method: "GET",
+            }),
+            providesTags: ["RIDE"],
         }),
     }),
 });
 
-export const { useRequestRideMutation } = rideApi;
+export const { useRequestRideMutation, useGetCurrentRideQuery } = rideApi;

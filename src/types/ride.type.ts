@@ -1,3 +1,5 @@
+import type { rideStatus } from "@/constants/rideStatus";
+
 export interface IRideInfo {
     rider: string;
     pickUp: PickUp;
@@ -14,12 +16,24 @@ interface Destination {
     address: string;
 }
 
+interface Driver {
+    _id: string;
+    user: {
+        _id: string;
+        name: string;
+        email: string;
+        role?: string;
+    };
+}
+
+export type RideStatus = keyof typeof rideStatus;
+
 export interface IRide {
     rider: string;
-    driver: null | string;
+    driver: null | Driver;
     vehicle: null | string;
     currentRiderId: string;
-    status: string;
+    status: RideStatus;
     pickUp: PickUp;
     destination: Destination;
     fare: number;

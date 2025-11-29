@@ -73,7 +73,7 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Navigate to="/rider/request-ride" />
+                element: <Navigate to="/rider/live-ride-tracking" />
             },
             ...generateRoutes(riderSidebarItems)
         ]
