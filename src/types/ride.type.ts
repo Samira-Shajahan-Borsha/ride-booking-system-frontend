@@ -29,6 +29,7 @@ interface Driver {
 export type RideStatus = keyof typeof rideStatus;
 
 export interface IRide {
+    _id: string;
     rider: string;
     driver: null | Driver;
     vehicle: null | string;
@@ -45,7 +46,6 @@ export interface IRide {
     completedAt: null | string;
     canceledBy: null | string;
     rating: null | string;
-    _id: string;
     createdAt: string;
     updatedAt: string;
 }

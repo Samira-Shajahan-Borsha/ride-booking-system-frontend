@@ -25,9 +25,10 @@ import { Input } from "@/components/ui/input"
 import { paymentMethod } from "@/constants/paymentMethod"
 import { toast } from "sonner"
 import { useUserInfoQuery } from "@/redux/features/auth/auth.Api"
-import { useRequestRideMutation } from "@/redux/features/ride/ride.api"
+import { useGetCurrentRideQuery, useRequestRideMutation } from "@/redux/features/ride/ride.api"
 import { Loader2 } from "lucide-react"
 import { useNavigate } from "react-router"
+import { rideStatus } from "@/constants/rideStatus"
 
 
 const rideRequestForm = z.object({
@@ -46,7 +47,10 @@ const rideRequestForm = z.object({
 const RideRequestForm = () => {
 
     const { data: riderInfo } = useUserInfoQuery(null);
+
     const [requestRide, { isLoading }] = useRequestRideMutation();
+
+    const { data: currentRide } = useGetCurrentRideQuery(null);
 
     const navigate = useNavigate();
 
@@ -96,9 +100,30 @@ const RideRequestForm = () => {
         }
     }
 
+    const isActiveRide =
+        currentRide?.data?.status === rideStatus.REQUESTED ||
+        currentRide?.data?.status === rideStatus.ACCEPTED ||
+        currentRide?.data?.status === rideStatus.PICKED_UP ||
+        currentRide?.data?.status === rideStatus.IN_TRANSIT;
+
     return (
         <div className="max-w-lg container mx-auto py-10">
             <h1 className="text-lg font-medium mb-10 underline underline-offset-8">Request Ride</h1>
+            {isActiveRide && (
+                <div className="mb-4 text-sm font-medium  text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30 p-3 rounded">
+                    <p>
+                        You already have an active ride. You cannot request a new ride until it is completed or canceled.
+                    </p>
+                    <Button
+                        variant="link"
+                        className="mt-1 p-0 text-red-700 dark:text-red-400 underline cursor-pointer"
+                        onClick={() => navigate("/rider/live-ride-tracking")}
+                    >
+                        Track your ride
+                    </Button>
+                </div>
+            )}
+
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     {/* Pick-up */}
@@ -178,7 +203,7 @@ const RideRequestForm = () => {
                     {
                         form.formState.errors.root && <p className="text-destructive text-sm">{form.formState.errors.root.message}</p>
                     }
-                    <Button type="submit" className="w-full" disabled={isLoading}>
+                    <Button type="submit" className="w-full" disabled={isLoading || isActiveRide}>
                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         {isLoading ? "Requesting..." : "Request Ride"}</Button>
                 </form>

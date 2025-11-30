@@ -1,4 +1,3 @@
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { useGetCurrentRideQuery } from "@/redux/features/ride/ride.api";
@@ -7,6 +6,8 @@ import { format } from "date-fns";
 import Badge from "@/components/ui/badge";
 import { rideStatus } from "@/constants/rideStatus";
 import type { RideStatus } from "@/types/ride.type";
+import Loading from "@/components/modules/common/Loading";
+import { capitalize } from "@/utils/capitalize";
 
 const getStatusColor = (status: RideStatus) => {
   switch (status) {
@@ -34,17 +35,11 @@ const LiveRideTracking = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
-        <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
-        <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
-        <Loader2 className="animate-spin h-8 w-8 text-muted-foreground" />
-      </div>
+      <Loading />
     );
   }
 
   const ride = currentRide?.data;
-  console.log(ride);
 
   // === CASE 1: No current ride
   if (!ride) {
@@ -68,6 +63,7 @@ const LiveRideTracking = () => {
     );
   }
 
+  // === CASE 1: Current ride
   return (
     <div className="max-w-md mx-auto mt-10">
       <Card className="shadow-lg border border-border">
@@ -91,8 +87,7 @@ const LiveRideTracking = () => {
           </p>
           <p>
             <strong>Payment:</strong>{" "}
-            {ride.paymentMethod.charAt(0).toUpperCase() +
-              ride.paymentMethod.slice(1).toLowerCase()}
+            {capitalize(ride?.paymentMethod)}
           </p>
           <p className="flex items-center gap-2">
             <strong>Status:</strong>
@@ -102,7 +97,7 @@ const LiveRideTracking = () => {
                 ride.status
               )}`}
             >
-              {ride.status}
+              {capitalize(ride.status)}
             </Badge>
           </p>
 
