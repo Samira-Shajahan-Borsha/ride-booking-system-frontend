@@ -4,6 +4,8 @@ export type { IRegisterInfo, User, ILoginRes, ILoginInfo } from "@/types/auth.ty
 
 export type { IRideInfo, IRide } from "@/types/ride.type";
 
+export type { IDriver } from "@/types/driver.type";
+
 export interface IResponse<T> {
     success: boolean;
     statusCode: number;

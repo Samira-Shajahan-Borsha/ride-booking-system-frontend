@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { useGetCurrentRideQuery } from "@/redux/features/ride/ride.api";
+import { useCancelRideMutation, useGetCurrentRideQuery } from "@/redux/features/ride/ride.api";
 import { Link } from "react-router";
 import { format } from "date-fns";
 import Badge from "@/components/ui/badge";
@@ -8,6 +8,19 @@ import { rideStatus } from "@/constants/rideStatus";
 import type { RideStatus } from "@/types/ride.type";
 import Loading from "@/components/modules/common/Loading";
 import { capitalize } from "@/utils/capitalize";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { toast } from "sonner";
 
 const getStatusColor = (status: RideStatus) => {
   switch (status) {
@@ -26,12 +39,44 @@ const getStatusColor = (status: RideStatus) => {
   }
 };
 
+const getRideStatusMessage = (status: string) => {
+  switch (status) {
+    case rideStatus.REQUESTED: return "🕒 Waiting for a driver to accept your ride...";
+    case rideStatus.ACCEPTED: return "🤵 Driver is on the way to pick you up!";
+    case rideStatus.PICKED_UP: return "🚗 Ride in progress – enjoy your trip!";
+    case rideStatus.IN_TRANSIT: return "🚗 Ride in progress – enjoy your trip!";
+    case rideStatus.COMPLETED: return "✅ Ride completed. Thank you for riding with us!";
+    case rideStatus.CANCELED: return "❌ Ride was canceled.";
+    default: return "";
+  }
+};
+
 const LiveRideTracking = () => {
-  const { data: currentRide, isLoading } = useGetCurrentRideQuery(null);
+  const { data: currentRide, isLoading } = useGetCurrentRideQuery(null, {
+    pollingInterval: 5000
+  });
+
+  const [cancelRide] = useCancelRideMutation();
 
   const formatTime = (date: string | number | Date | null) => {
     return date ? format(new Date(date), "PPpp") : "Pending";
   };
+
+  const handleCancelRequest = async () => {
+    const toastId = toast.loading("Cancelling ride request...");
+
+    try {
+      const res = await cancelRide(currentRide?.data?._id as string).unwrap();
+
+      console.log(res, "Result of accepted ride")
+
+      toast.success("Ride canceled successfully", { id: toastId });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to cancel ride", { id: toastId });
+    }
+  }
 
   if (isLoading) {
     return (
@@ -177,13 +222,28 @@ const LiveRideTracking = () => {
 
         <CardFooter>
           {
-            ride?.status === rideStatus.REQUESTED ? <Button
-              variant="destructive"
-              className="w-full"
-            >
-              Cancel Ride
-            </Button>
-              : <p>🚗 Ride is {ride.status === "ACCEPTED" ? "on the way!" : "in progress..."}</p>
+            ride?.status === rideStatus.REQUESTED ? (<AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
+                  Cancel Request
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure you want to cancel this ride?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Canceling will remove your ride request. This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Keep Ride</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleCancelRequest}>
+                    Confirm Cancel
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>)
+              : <p>{getRideStatusMessage(ride.status)}</p>
           }
         </CardFooter>
       </Card>
