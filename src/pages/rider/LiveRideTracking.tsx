@@ -129,7 +129,7 @@ const LiveRideTracking = () => {
           </p>
 
           {ride.driver && (
-            <div className="mt-4 pt-4 border-t border-border">
+            <div className="mt-4 pt-4 border-t border-border space-y-2">
               <h3 className="font-medium mb-2 text-foreground">Driver Info</h3>
               <p className="text-sm">
                 <strong>Driver:</strong> {ride?.driver?.user?.name}

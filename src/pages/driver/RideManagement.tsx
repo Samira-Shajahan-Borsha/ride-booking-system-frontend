@@ -27,6 +27,7 @@ import {
   useGetCurrentRideQuery,
   useCancelRideMutation,
   useUpdateRideStatusMutation,
+  useCompleteRideMutation,
 } from "@/redux/features/ride/ride.api";
 import { capitalize } from "@/utils/capitalize";
 import { rideStatus } from "@/constants/rideStatus";
@@ -40,6 +41,7 @@ const RideManagement = () => {
   const ride = data?.data;
 
   const [cancelRide, { isLoading: isCanceling }] = useCancelRideMutation();
+  const [completeRide, { isLoading: isCompleting }] = useCompleteRideMutation();
   const [updateRideStatus, { isLoading: isUpdating }] =
     useUpdateRideStatusMutation();
 
@@ -64,7 +66,6 @@ const RideManagement = () => {
     );
   }
 
-
   const handleCancel = async () => {
     const toastId = toast.loading("Canceling ride...");
     try {
@@ -73,6 +74,19 @@ const RideManagement = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to cancel ride", {
+        id: toastId,
+      });
+    }
+  };
+
+  const handleCompleteRide = async () => {
+    const toastId = toast.loading("Completing ride...");
+    try {
+      await completeRide(ride._id).unwrap();
+      toast.success("Ride completed successfully", { id: toastId });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to complete ride", {
         id: toastId,
       });
     }
@@ -122,19 +136,15 @@ const RideManagement = () => {
           {/* RIDE INFO */}
           <div className="border-t pt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
             <p>
-              <span className="text-muted-foreground">Fare:</span> {ride.fare} Tk
+              <strong className="text-muted-foreground">Fare:</strong> {ride.fare} Tk
             </p>
             <p>
-              <span className="text-muted-foreground">Distance:</span>{" "}
+              <strong className="text-muted-foreground">Distance:</strong>{" "}
               {ride.distance} km
             </p>
             <p>
-              <span className="text-muted-foreground">Payment:</span>{" "}
+              <strong className="text-muted-foreground">Payment:</strong>{" "}
               {capitalize(ride.paymentMethod)}
-            </p>
-            <p>
-              <span className="text-muted-foreground">Requested:</span>{" "}
-              {format(new Date(ride.requestedAt), "PPpp")}
             </p>
           </div>
 
@@ -210,6 +220,8 @@ const RideManagement = () => {
 
           {ride.status === rideStatus.IN_TRANSIT && (
             <Button
+              onClick={handleCompleteRide}
+              disabled={isCompleting}
             >
               Complete Ride
             </Button>

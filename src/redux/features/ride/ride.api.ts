@@ -44,11 +44,21 @@ export const rideApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["RIDE"],
         }),
-        updateRideStatus: build.mutation<IResponse<IRide>, { rideId: string; status: { status: RideStatus } }>({
+        updateRideStatus: build.mutation<
+            IResponse<IRide>,
+            { rideId: string; status: { status: RideStatus } }
+        >({
             query: ({ rideId, status }) => ({
                 url: `/rides/status/${rideId}`,
                 method: "PATCH",
                 data: status,
+            }),
+            invalidatesTags: ["RIDE"],
+        }),
+        completeRide: build.mutation<IResponse<IRide>, string>({
+            query: (rideId) => ({
+                url: `/rides/complete/${rideId}`,
+                method: "PATCH",
             }),
             invalidatesTags: ["RIDE"],
         }),
@@ -62,4 +72,5 @@ export const {
     useAcceptRideMutation,
     useCancelRideMutation,
     useUpdateRideStatusMutation,
+    useCompleteRideMutation,
 } = rideApi;
