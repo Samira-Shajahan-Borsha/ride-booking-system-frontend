@@ -5,7 +5,6 @@ import { Link } from "react-router";
 import { format } from "date-fns";
 import Badge from "@/components/ui/badge";
 import { rideStatus } from "@/constants/rideStatus";
-import type { RideStatus } from "@/types/ride.type";
 import Loading from "@/components/modules/common/Loading";
 import { capitalize } from "@/utils/capitalize";
 
@@ -21,23 +20,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner";
-
-const getStatusColor = (status: RideStatus) => {
-  switch (status) {
-    case rideStatus.REQUESTED:
-      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
-    case rideStatus.ACCEPTED:
-      return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300";
-    case rideStatus.PICKED_UP:
-      return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300";
-    case rideStatus.IN_TRANSIT:
-      return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
-    case rideStatus.COMPLETED:
-      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300";
-    default:
-      return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300";
-  }
-};
+import { getStatusColor } from "@/utils/getRideStatusColor";
+import TimelineItem from "@/components/modules/common/TimelineItem";
 
 const getRideStatusMessage = (status: string) => {
   switch (status) {
@@ -66,9 +50,7 @@ const LiveRideTracking = () => {
     const toastId = toast.loading("Cancelling ride request...");
 
     try {
-      const res = await cancelRide(currentRide?.data?._id as string).unwrap();
-
-      console.log(res, "Result of accepted ride")
+      await cancelRide(currentRide?.data?._id as string).unwrap();
 
       toast.success("Ride canceled successfully", { id: toastId });
 
@@ -175,47 +157,21 @@ const LiveRideTracking = () => {
                 </div>
               </div>
 
-              {/* Accepted */}
-              <div className="flex items-start gap-3">
-                <div
-                  className={`h-3 w-3 rounded-full mt-1 ${ride.acceptedAt ? "bg-green-500" : "bg-gray-400"
-                    }`}
-                ></div>
-                <div>
-                  <p className="text-sm font-medium">Accepted</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatTime(ride.acceptedAt)}
-                  </p>
-                </div>
-              </div>
-
-              {/* Picked Up */}
-              <div className="flex items-start gap-3">
-                <div
-                  className={`h-3 w-3 rounded-full mt-1 ${ride.pickedUpAt ? "bg-green-500" : "bg-gray-400"
-                    }`}
-                ></div>
-                <div>
-                  <p className="text-sm font-medium">Picked Up</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatTime(ride.pickedUpAt)}
-                  </p>
-                </div>
-              </div>
-
-              {/* Completed */}
-              <div className="flex items-start gap-3">
-                <div
-                  className={`h-3 w-3 rounded-full mt-1 ${ride.completedAt ? "bg-green-500" : "bg-gray-400"
-                    }`}
-                ></div>
-                <div>
-                  <p className="text-sm font-medium">Completed</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatTime(ride.completedAt)}
-                  </p>
-                </div>
-              </div>
+              <TimelineItem
+                label="Accepted"
+                date={ride.acceptedAt}
+                active
+              />
+              <TimelineItem
+                label="Picked Up"
+                date={ride.pickedUpAt}
+                active={!!ride.pickedUpAt}
+              />
+              <TimelineItem
+                label="Completed"
+                date={ride.completedAt}
+                active={!!ride.completedAt}
+              />
             </div>
           </div>
         </CardContent>

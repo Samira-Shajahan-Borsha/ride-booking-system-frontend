@@ -1,5 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse, IRide, IRideInfo } from "@/types";
+import type { RideStatus } from "@/types/ride.type";
 
 export const rideApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -43,6 +44,14 @@ export const rideApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["RIDE"],
         }),
+        updateRideStatus: build.mutation<IResponse<IRide>, { rideId: string; status: { status: RideStatus } }>({
+            query: ({ rideId, status }) => ({
+                url: `/rides/status/${rideId}`,
+                method: "PATCH",
+                data: status,
+            }),
+            invalidatesTags: ["RIDE"],
+        }),
     }),
 });
 
@@ -52,4 +61,5 @@ export const {
     useGetIncomingRideRequestsQuery,
     useAcceptRideMutation,
     useCancelRideMutation,
+    useUpdateRideStatusMutation,
 } = rideApi;

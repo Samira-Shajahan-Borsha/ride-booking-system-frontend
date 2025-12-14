@@ -67,18 +67,40 @@ const IncomingRequests = () => {
   // CASE - 1 If driver already accepted a ride
   if (activeRide) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-        <Card className="max-w-md w-full shadow-lg border border-border p-6">
-          <CardHeader>
-            <CardTitle className="text-lg mb-2">Incoming Ride Requests</CardTitle>
+      <div className="flex items-center justify-center min-h-[65vh] px-4">
+        <Card className="max-w-lg w-full border shadow-lg">
+          <CardHeader className="text-center space-y-3">
+            {/* Status Badge */}
+            <div className="flex justify-center">
+              <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                Active Ride In Progress
+              </span>
+            </div>
+
+            <CardTitle className="text-xl">
+              You already accepted a ride
+            </CardTitle>
           </CardHeader>
 
-          <CardContent className="text-gray-700 dark:text-gray-300 space-y-2">
-            <p>You already have an active ride.</p>
+          <CardContent className="text-center space-y-4">
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              You can’t accept new ride requests while you have an active ride.
+              Please manage your current ride to continue.
+            </p>
+
+            <div className="rounded-lg border bg-muted/40 px-4 py-3 text-sm">
+              Go to <span className="font-medium">Ride Management</span> to:
+              <ul className="mt-2 space-y-1 text-muted-foreground">
+                <li>• Update ride status</li>
+                <li>• Cancel before pickup</li>
+                <li>• Complete the ride</li>
+              </ul>
+            </div>
           </CardContent>
 
           <CardFooter className="flex justify-center">
             <Button
+              size="lg"
               className="w-full sm:w-auto"
               onClick={() => navigate("/driver/ride-management")}
             >
@@ -102,8 +124,8 @@ const IncomingRequests = () => {
           <p>Check back later or stay online to receive new requests.</p>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button className="w-full sm:w-auto" onClick={() => navigate("/driver/dashboard")}>
-            Go to Dashboard
+          <Button className="w-full sm:w-auto" onClick={() => navigate("/driver/earnings")}>
+            View Earnings
           </Button>
         </CardFooter>
       </Card>
