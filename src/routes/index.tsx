@@ -16,6 +16,7 @@ import Unauthorized from "@/pages/Unauthorized";
 import { withAuth } from "@/utils/withAuth";
 import { role } from "@/constants/role";
 import type { TRole } from "@/types";
+import AccountStatus from "@/pages/AccountStatus";
 
 export const router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
             {
                 Component: Unauthorized,
                 path: '/unauthorized'
+            },
+            {
+                Component: AccountStatus,
+                path: '/account-status'
             },
         ]
     },
