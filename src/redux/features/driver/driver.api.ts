@@ -10,7 +10,18 @@ export const driverApi = baseApi.injectEndpoints({
             }),
             providesTags: ["DRIVER"],
         }),
+        updateAvailableStatus: build.mutation<
+            IResponse<IDriver>,
+            { driverId: string; status: { isAvailable: string } }
+        >({
+            query: ({ driverId, status }) => ({
+                url: `/drivers/available-status/${driverId}`,
+                method: "POST",
+                data: status,
+            }),
+            invalidatesTags: ["DRIVER"],
+        }),
     }),
 });
 
-export const { useGetMyDriverProfileQuery } = driverApi;
+export const { useGetMyDriverProfileQuery, useUpdateAvailableStatusMutation } = driverApi;

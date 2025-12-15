@@ -34,6 +34,7 @@ import { getStatusColor } from "@/utils/getRideStatusColor";
 import type { RideStatus } from "@/types/ride.type";
 import TimelineItem from "@/components/modules/common/TimelineItem";
 import { Link } from "react-router";
+import { CarIcon } from "lucide-react";
 
 const RideManagement = () => {
   const { data, isLoading } = useGetCurrentRideQuery(null);
@@ -49,11 +50,14 @@ const RideManagement = () => {
   if (!ride) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <Card className="max-w-md w-full shadow-lg border border-border p-6">
-          <CardTitle>No Active Ride</CardTitle>
-          <p className="text-muted-foreground mt-2">
-            You don’t have any active ride right now.
-          </p>
+        <Card className="max-w-md w-full shadow-lg border border-border p-6 text-center space-y-4">
+          <div className="flex flex-col items-center space-y-3">
+            <CarIcon className="w-12 h-12 text-gray-400" />
+            <CardTitle className="text-xl font-semibold">No Active Ride</CardTitle>
+            <p className="text-muted-foreground">
+              You don’t have any active rides at the moment. Keep an eye on incoming requests to accept new rides.
+            </p>
+          </div>
 
           <CardFooter className="flex justify-center">
             <Link to="/driver/incoming-requests">

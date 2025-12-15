@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner";
 import { useGetMyDriverProfileQuery } from "@/redux/features/driver/driver.api";
+import { driverAvailabilityStatus } from "@/constants/driverAvailabilityStatus";
+import { WifiOffIcon } from "lucide-react";
 
 const IncomingRequests = () => {
   const navigate = useNavigate();
@@ -31,8 +33,6 @@ const IncomingRequests = () => {
   const { data: currentRide, isLoading: isCurrentRideLoading } = useGetCurrentRideQuery(null);
 
   const activeRide = currentRide?.data;
-
-  console.log(activeRide, "activeRide");
 
   const skipIncoming = isCurrentRideLoading || !!currentRide?.data
 
@@ -135,6 +135,15 @@ const IncomingRequests = () => {
   // CASE - 3 If driver has no active ride
   return (
     <div className="space-y-4">
+      {driverProfile?.data?.isAvailable === driverAvailabilityStatus.OFFLINE &&
+        <div className="flex flex-col items-center justify-center min-h-[150px] max-w-lg mx-auto mb-6 p-4 rounded bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 space-y-3 text-center shadow">
+          <WifiOffIcon className="w-8 h-8 mb-2" />
+          <p className="text-sm font-medium">You are currently offline.</p>
+          <p className="text-sm">
+            Go online from the menu to start receiving ride requests.
+          </p>
+        </div>
+      }
       <h2 className="text-lg font-bold">Incoming Ride Requests</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {incomingRideRequests?.data?.map((ride) => (
@@ -146,13 +155,13 @@ const IncomingRequests = () => {
             </CardHeader>
 
             <CardContent className="space-y-2 text-sm">
-              <p><strong>Fare:</strong> ৳{ride.fare}</p>
+              <p><strong>Fare:</strong>{ride.fare} Tk</p>
               <p><strong>Distance:</strong> {ride.distance} km</p>
               <p><strong>Payment:</strong> {capitalize(ride.paymentMethod)}</p>
               <p><strong>Requested:</strong> {format(new Date(ride.requestedAt), "PPpp")}</p>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button size="sm" className="mt-2 w-full md:w-auto">
+                  <Button size="sm" className="mt-2 w-full md:w-auto" disabled={driverProfile?.data?.isAvailable === driverAvailabilityStatus.OFFLINE}>
                     Accept
                   </Button>
                 </AlertDialogTrigger>

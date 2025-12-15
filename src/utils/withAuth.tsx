@@ -12,7 +12,7 @@ export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
     return function AuthWrapper() {
         const { data: userData, isLoading: isUserLoading } = useUserInfoQuery(null);
 
-        console.log(userData, "userData from auth")
+        // console.log(userData, "userData from auth")
 
         const shouldSkipDriverProfile = !userData?.data || userData.data.role !== role.driver;
 
