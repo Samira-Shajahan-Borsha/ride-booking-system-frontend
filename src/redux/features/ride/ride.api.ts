@@ -62,6 +62,14 @@ export const rideApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["RIDE"],
         }),
+        getRideHistory: build.query({
+            query: (params) => ({
+                url: "/rides/all-rides",
+                method: "GET",
+                params,
+            }),
+            providesTags: ["RIDE"],
+        }),
     }),
 });
 
@@ -73,4 +81,5 @@ export const {
     useCancelRideMutation,
     useUpdateRideStatusMutation,
     useCompleteRideMutation,
+    useGetRideHistoryQuery,
 } = rideApi;

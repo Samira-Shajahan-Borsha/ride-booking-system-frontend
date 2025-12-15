@@ -1,7 +1,7 @@
 import Analytics from "@/pages/admin/Analytics";
 import Drivers from "@/pages/admin/Drivers";
 import Riders from "@/pages/admin/Riders";
-import Rides from "@/pages/admin/Rides";
+import RideHistory from "@/pages/RideHistory";
 import type { ISidebarItems } from "@/types";
 
 export const adminSidebarItems: ISidebarItems[] = [
@@ -11,9 +11,9 @@ export const adminSidebarItems: ISidebarItems[] = [
         Component: Analytics,
     },
     {
-        title: "Rides",
-        url: "/admin/rides",
-        Component: Rides,
+        title: "Ride History",
+        url: "/admin/ride-history",
+        Component: RideHistory,
     },
     {
         title: "Drivers",

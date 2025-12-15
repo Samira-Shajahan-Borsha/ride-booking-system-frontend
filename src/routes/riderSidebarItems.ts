@@ -1,6 +1,6 @@
 import LiveRideTracking from "@/pages/rider/LiveRideTracking";
 import RideDetails from "@/pages/rider/RideDetails";
-import RideHistory from "@/pages/rider/RideHistory";
+import RideHistory from "@/pages/RideHistory";
 import RideRequestForm from "@/pages/rider/RideRequestForm";
 import type { ISidebarItems } from "@/types";
 

@@ -1,6 +1,7 @@
 import Earnings from "@/pages/driver/Earnings";
 import IncomingRequests from "@/pages/driver/IncomingRequests";
 import RideManagement from "@/pages/driver/RideManagement";
+import RideHistory from "@/pages/RideHistory";
 import type { ISidebarItems } from "@/types";
 
 export const driverSidebarItems: ISidebarItems[] = [
@@ -18,5 +19,10 @@ export const driverSidebarItems: ISidebarItems[] = [
         title: "Ride Management",
         url: "/driver/ride-management",
         Component: RideManagement,
+    },
+    {
+        title: "Ride History",
+        url: "/driver/ride-history",
+        Component: RideHistory,
     },
 ];

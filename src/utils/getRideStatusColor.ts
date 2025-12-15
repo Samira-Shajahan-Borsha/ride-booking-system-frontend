@@ -13,6 +13,8 @@ export const getStatusColor = (status: RideStatus) => {
             return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
         case rideStatus.COMPLETED:
             return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300";
+        case rideStatus.CANCELED:
+            return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300";
         default:
             return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300";
     }
