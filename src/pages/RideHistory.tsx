@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGetRideHistoryQuery } from "@/redux/features/ride/ride.api";
 import { Input } from "@/components/ui/input";
 import { DataTable } from "@/components/modules/rides/data-table";
-import { rideColumns } from "@/components/modules/rides/columns";
+import { getRideColumns } from "@/components/modules/rides/columns";
 import {
   Select,
   SelectContent,
@@ -18,41 +18,61 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
 import { rideStatus } from "@/constants/rideStatus";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.Api";
+import { role } from "@/constants/role";
+import { useNavigate } from "react-router";
+import Loading from "@/components/modules/common/Loading";
 
 export default function RideHistory() {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState<string | undefined>("ALL");
+  const [sort, setSort] = useState("-createdAt");
+
+  const navigate = useNavigate();
 
   const query = {
     page,
     limit: 10,
     searchTerm,
-    sort: "-createdAt",
-    fields: "status,fare,pickUp,destination,createdAt",
+    sort,
     ...(status !== "ALL" && { status }),
   };
 
-  const { data } = useGetRideHistoryQuery(query);
+  const { data, isLoading: isRideHistoryDataLoading } = useGetRideHistoryQuery(query);
+
+  const { data: userData } = useUserInfoQuery(null);
+
+  const isAdmin = userData?.data?.role === role.admin || userData?.data?.role === role.superAdmin;
 
   const totalPages = data?.meta?.totalPage || 1;
 
+  const toggleSort = () => {
+    setSort(prev => (prev === "-createdAt" ? "createdAt" : "-createdAt"));
+  };
+
+  if (isRideHistoryDataLoading) {
+    return <Loading />
+  }
+
   return (
     <div className="space-y-4">
-
       <div className="flex flex-wrap gap-3">
-        <Input
-          placeholder="Search location..."
-          value={searchTerm}
-          disabled={data?.meta?.total === 0}
-          onChange={(e) => {
-            setPage(1);
-            setSearchTerm(e.target.value);
-          }}
-          className="w-64"
-        />
+        <div className="flex flex-col gap-1">
+          <Input
+            placeholder="Search location..."
+            value={searchTerm}
+            onChange={(e) => {
+              setPage(1);
+              setSearchTerm(e.target.value);
+            }}
+            className="w-64"
+          />
+          <span className="text-[10px] text-muted-foreground ml-1">
+            Search applies to pickup and destination field only
+          </span>
+        </div>
 
         <Select
           value={status}
@@ -74,7 +94,7 @@ export default function RideHistory() {
         </Select>
       </div>
 
-      <DataTable columns={rideColumns} data={data?.data ?? []} />
+      <DataTable columns={getRideColumns(toggleSort, isAdmin, navigate)} data={data?.data ?? []} />
 
       {totalPages > 1 && (
         <div className="w-full flex justify-end mt-4">
@@ -116,7 +136,6 @@ export default function RideHistory() {
           </Pagination>
         </div>
       )}
-
     </div>
   );
 }

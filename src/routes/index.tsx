@@ -17,6 +17,7 @@ import { withAuth } from "@/utils/withAuth";
 import { role } from "@/constants/role";
 import type { TRole } from "@/types";
 import AccountStatus from "@/pages/AccountStatus";
+import RideDetails from "@/pages/RideDetails";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +61,16 @@ export const router = createBrowserRouter([
                 path: '/account-status'
             },
         ]
+    },
+    {
+        Component: withAuth(DashboardLayout),
+        path: "/",
+        children: [
+            {
+                path: "rides/:rideId",
+                Component: RideDetails,
+            },
+        ],
     },
     {
         Component: withAuth(DashboardLayout, role.superAdmin as TRole),

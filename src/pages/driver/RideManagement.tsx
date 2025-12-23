@@ -127,7 +127,7 @@ const RideManagement = () => {
 
         <CardContent className="space-y-8 text-sm text-muted-foreground">
           {/* LOCATIONS */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             <p>
               <strong>Pickup:</strong> {ride.pickUp.address}
             </p>
@@ -137,7 +137,7 @@ const RideManagement = () => {
           </div>
 
           {/* RIDE INFO */}
-          <div className="border-t pt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="border-t pt-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
             <p>
               <strong className="text-muted-foreground">Fare:</strong> {ride.fare} Tk
             </p>
