@@ -14,7 +14,7 @@ const adminColumns: ColumnDef<any>[] = [
     {
         accessorKey: "driver.name",
         header: "Driver",
-        cell: ({ row }) => row.original.driver?.user.name ?? "—",
+        cell: ({ row }) => row.original.driver?.user?.name ?? "—",
     },
 ];
 

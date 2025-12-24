@@ -23,16 +23,26 @@ import { useUserInfoQuery } from "@/redux/features/auth/auth.Api";
 import { role } from "@/constants/role";
 import { useNavigate } from "react-router";
 import Loading from "@/components/modules/common/Loading";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import { type DateRange } from "react-day-picker";
+import { CalendarIcon } from "lucide-react";
 
 export default function RideHistory() {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [status, setStatus] = useState<string | undefined>("ALL");
   const [sort, setSort] = useState("-createdAt");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
 
   const navigate = useNavigate();
 
-  const query = {
+  const { data: userData } = useUserInfoQuery(null);
+  const isAdmin = userData?.data?.role === role.admin || userData?.data?.role === role.superAdmin;
+
+  const query: Record<string, string | number> = {
     page,
     limit: 10,
     searchTerm,
@@ -40,13 +50,25 @@ export default function RideHistory() {
     ...(status !== "ALL" && { status }),
   };
 
+  if (
+    isAdmin &&
+    dateRange?.from &&
+    dateRange?.to &&
+    dateRange.from.getTime() !== dateRange.to.getTime()
+  ) {
+    query.startDate = format(dateRange.from, "yyyy-MM-dd");
+    query.endDate = format(dateRange.to, "yyyy-MM-dd");
+  }
+
   const { data, isLoading: isRideHistoryDataLoading } = useGetRideHistoryQuery(query);
 
-  const { data: userData } = useUserInfoQuery(null);
-
-  const isAdmin = userData?.data?.role === role.admin || userData?.data?.role === role.superAdmin;
-
   const totalPages = data?.meta?.totalPage || 1;
+
+  const dateRangeText = !dateRange?.from
+    ? "Select date range"
+    : !dateRange.to
+      ? `From ${format(dateRange.from, "LLL dd, y")}`
+      : `${format(dateRange.from, "LLL dd, y")} - ${format(dateRange.to, "LLL dd, y")}`;
 
   const toggleSort = () => {
     setSort(prev => (prev === "-createdAt" ? "createdAt" : "-createdAt"));
@@ -58,7 +80,7 @@ export default function RideHistory() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap items-start gap-3">
         <div className="flex flex-col gap-1">
           <Input
             placeholder="Search location..."
@@ -76,7 +98,6 @@ export default function RideHistory() {
 
         <Select
           value={status}
-          disabled={data?.meta?.total === 0}
           onValueChange={(value) => {
             setPage(1);
             setStatus(value);
@@ -85,13 +106,51 @@ export default function RideHistory() {
           <SelectTrigger className="w-40">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
-
           <SelectContent>
             <SelectItem value="ALL">All</SelectItem>
             <SelectItem value={rideStatus.COMPLETED}>Completed</SelectItem>
             <SelectItem value={rideStatus.CANCELED}>Cancelled</SelectItem>
           </SelectContent>
         </Select>
+
+        {isAdmin && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-[260px] justify-start text-left font-normal flex items-center gap-2"
+              >
+                <CalendarIcon className="h-4 w-4" />
+
+                <span className="flex-1 truncate">{dateRangeText}</span>
+
+                {dateRange?.from && dateRange?.to && (
+                  <span
+                    onClick={(e) => {
+                      setDateRange(undefined);
+                      setPage(1);
+                    }}
+                    className="text-muted-foreground hover:text-foreground cursor-pointer"
+                  >
+                    ✕
+                  </span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="range"
+                numberOfMonths={1}
+                selected={dateRange}
+                disabled={(date) => date > new Date()}
+                onSelect={(range) => {
+                  setPage(1);
+                  setDateRange(range);
+                }}
+              />
+            </PopoverContent>
+          </Popover>
+        )}
       </div>
 
       <DataTable columns={getRideColumns(toggleSort, isAdmin, navigate)} data={data?.data ?? []} />
