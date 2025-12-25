@@ -1,6 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IDriver, IResponse, IRide } from "@/types";
-import type { RideHistoryQuery } from "@/types/ride.type";
+import type { IDriver, IResponse } from "@/types";
 
 export const driverApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -22,13 +21,36 @@ export const driverApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["DRIVER"],
         }),
-        getAllDrivers: build.query<IResponse<IRide[]>, RideHistoryQuery>({
+        getAllDrivers: build.query({
             query: (params) => ({
                 url: "/drivers/all-drivers",
                 method: "GET",
                 params,
             }),
-            providesTags: ["DRIVER"],
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.data.map((driver: IDriver) => ({
+                              type: "DRIVER" as const,
+                              id: driver?._id,
+                          })),
+                          { type: "DRIVER", id: "DRIVER_LIST" },
+                      ]
+                    : [{ type: "DRIVER", id: "DRIVER_LIST" }],
+        }),
+        approveDriver: build.mutation<IResponse<IDriver>, string>({
+            query: (driverId) => ({
+                url: `/drivers/approve/${driverId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: [{ type: "DRIVER", id: "DRIVER_LIST" }],
+        }),
+        suspendDriver: build.mutation<IResponse<IDriver>, string>({
+            query: (driverId) => ({
+                url: `/drivers/suspend/${driverId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: [{ type: "DRIVER", id: "DRIVER_LIST" }],
         }),
     }),
 });
@@ -37,4 +59,6 @@ export const {
     useGetMyDriverProfileQuery,
     useUpdateAvailableStatusMutation,
     useGetAllDriversQuery,
+    useApproveDriverMutation,
+    useSuspendDriverMutation,
 } = driverApi;

@@ -4,6 +4,7 @@ import { getStatusColor } from "@/utils/getRideStatusColor";
 import { type ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ChevronsUpDown, Eye } from "lucide-react";
+import type { NavigateFunction } from "react-router";
 
 const adminColumns: ColumnDef<any>[] = [
     {
@@ -18,7 +19,7 @@ const adminColumns: ColumnDef<any>[] = [
     },
 ];
 
-export const getRideColumns = (toggleSort: () => void, isAdmin: boolean = false, navigate): ColumnDef<any>[] => [
+export const getRideColumns = (toggleSort: () => void, isAdmin: boolean = false, navigate: NavigateFunction): ColumnDef<any>[] => [
     {
         accessorKey: "pickUp.address",
         header: "Pickup",
@@ -37,7 +38,6 @@ export const getRideColumns = (toggleSort: () => void, isAdmin: boolean = false,
         header: "Status",
         cell: ({ row }) => (
             <Badge
-                variant="outline"
                 className={`text-xs font-medium px-2 py-0.5 rounded-full ${getStatusColor(
                     row.original.status
                 )}`}

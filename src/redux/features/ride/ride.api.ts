@@ -1,6 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
 import type { IResponse, IRide, IRideInfo } from "@/types";
-import type { RideStatus } from "@/types/ride.type";
+import type { RideHistoryQuery, RideStatus } from "@/types/ride.type";
 
 export const rideApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -62,7 +62,7 @@ export const rideApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["RIDE"],
         }),
-        getRideHistory: build.query({
+        getRideHistory: build.query<IResponse<IRide[]>, RideHistoryQuery>({
             query: (params) => ({
                 url: "/rides/all-rides",
                 method: "GET",
