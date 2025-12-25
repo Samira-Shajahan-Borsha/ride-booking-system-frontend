@@ -5,7 +5,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Link } from "react-router"
+import { NavLink } from "react-router"
 
 export function NavMain({
   items,
@@ -21,11 +21,13 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <Link to={item.url}>
-                <SidebarMenuButton tooltip={item.title}>
-                  <span>{item.title}</span>
-                </SidebarMenuButton>
-              </Link>
+              <NavLink to={item.url} end>
+                {({ isActive }) => (
+                  <SidebarMenuButton tooltip={item.title} isActive={isActive}>
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                )}
+              </NavLink>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

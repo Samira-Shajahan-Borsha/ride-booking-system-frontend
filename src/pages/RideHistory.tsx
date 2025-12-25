@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useGetRideHistoryQuery } from "@/redux/features/ride/ride.api";
 import { Input } from "@/components/ui/input";
-import { DataTable } from "@/components/modules/rides/data-table";
+import { DataTable } from "@/components/modules/common/data-table";
 import { getRideColumns } from "@/components/modules/rides/columns";
 import {
   Select,
@@ -80,6 +80,15 @@ export default function RideHistory() {
 
   return (
     <div className="space-y-4">
+      <div className="space-y-1">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Ride History
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          View and manage all past rides
+        </p>
+      </div>
+
       <div className="flex flex-wrap items-start gap-3">
         <div className="flex flex-col gap-1">
           <Input
@@ -127,6 +136,7 @@ export default function RideHistory() {
                 {dateRange?.from && dateRange?.to && (
                   <span
                     onClick={(e) => {
+                      e.stopPropagation();
                       setDateRange(undefined);
                       setPage(1);
                     }}

@@ -1,5 +1,6 @@
 import { baseApi } from "@/redux/baseApi";
-import type { IDriver, IResponse } from "@/types";
+import type { IDriver, IResponse, IRide } from "@/types";
+import type { RideHistoryQuery } from "@/types/ride.type";
 
 export const driverApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -21,7 +22,19 @@ export const driverApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["DRIVER"],
         }),
+        getAllDrivers: build.query<IResponse<IRide[]>, RideHistoryQuery>({
+            query: (params) => ({
+                url: "/drivers/all-drivers",
+                method: "GET",
+                params,
+            }),
+            providesTags: ["DRIVER"],
+        }),
     }),
 });
 
-export const { useGetMyDriverProfileQuery, useUpdateAvailableStatusMutation } = driverApi;
+export const {
+    useGetMyDriverProfileQuery,
+    useUpdateAvailableStatusMutation,
+    useGetAllDriversQuery,
+} = driverApi;

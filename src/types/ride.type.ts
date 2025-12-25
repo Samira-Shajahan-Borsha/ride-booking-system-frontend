@@ -49,3 +49,13 @@ export interface IRide {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface RideHistoryQuery {
+    page?: number;
+    limit?: number;
+    searchTerm?: string;
+    sort?: string;
+    status?: string;
+    startDate?: string;
+    endDate?: string;
+}
