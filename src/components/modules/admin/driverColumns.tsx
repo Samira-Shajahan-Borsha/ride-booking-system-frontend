@@ -15,7 +15,7 @@ export const approvalStatusColor = {
         "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
 };
 
-export const getAdminDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id: string) => void, toggleSort: () => void): ColumnDef<any>[] => [
+export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id: string) => void, toggleSort: () => void): ColumnDef<any>[] => [
     {
         accessorKey: "user.name",
         header: "Name",

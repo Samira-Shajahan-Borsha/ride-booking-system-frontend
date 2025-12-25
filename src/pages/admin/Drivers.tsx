@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { getDriverColumns } from "@/components/modules/admin/driverColumns";
 import { DataTable } from "@/components/modules/common/data-table";
+import Loading from "@/components/modules/common/Loading";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -16,17 +18,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Loading from "@/components/modules/common/Loading";
-import { useGetAllDriversQuery } from "@/redux/features/driver/driver.api";
-import { getAdminDriverColumns } from "@/components/modules/admin/columns";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { useApproveDriverMutation, useSuspendDriverMutation } from "@/redux/features/driver/driver.api";
 import { APPROVAL_STATUS } from "@/constants/approvalStatus";
-import { Button } from "@/components/ui/button";
+import { useApproveDriverMutation, useGetAllDriversQuery, useSuspendDriverMutation } from "@/redux/features/driver/driver.api";
+import { useState } from "react";
 
 type TAction = "APPROVE" | "SUSPEND";
 
-export default function AdminDrivers() {
+export default function Drivers() {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [approval, setApproval] = useState<string | undefined>("ALL");
@@ -158,7 +156,7 @@ export default function AdminDrivers() {
         </div>
 
         <DataTable
-          columns={getAdminDriverColumns(handleActionClick, toggleSort)}
+          columns={getDriverColumns(handleActionClick, toggleSort)}
           data={data?.data ?? []}
         />
 

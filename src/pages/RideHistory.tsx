@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGetRideHistoryQuery } from "@/redux/features/ride/ride.api";
 import { Input } from "@/components/ui/input";
 import { DataTable } from "@/components/modules/common/data-table";
-import { getRideColumns } from "@/components/modules/rides/columns";
+import { getRideColumns } from "@/components/modules/rides/rideColumns";
 import {
   Select,
   SelectContent,
