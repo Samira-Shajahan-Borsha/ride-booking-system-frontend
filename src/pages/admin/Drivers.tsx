@@ -22,6 +22,7 @@ import { getAdminDriverColumns } from "@/components/modules/admin/columns";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useApproveDriverMutation, useSuspendDriverMutation } from "@/redux/features/driver/driver.api";
 import { APPROVAL_STATUS } from "@/constants/approvalStatus";
+import { Button } from "@/components/ui/button";
 
 type TAction = "APPROVE" | "SUSPEND";
 
@@ -113,7 +114,7 @@ export default function AdminDrivers() {
         </div>
 
         <div className="flex flex-wrap items-start gap-3">
-          <div className="flex flex-col gap-1">
+          <div className="relative w-64 flex flex-col gap-1">
             <Input
               placeholder="Search driver name or email..."
               value={searchTerm}
@@ -121,8 +122,20 @@ export default function AdminDrivers() {
                 setPage(1);
                 setSearchTerm(e.target.value);
               }}
-              className="w-64"
+              className="pr-6"
             />
+            {searchTerm && (
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSearchTerm("");
+                  setPage(1);
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer select-none"
+              >
+                ✕
+              </span>
+            )}
           </div>
 
           <Select

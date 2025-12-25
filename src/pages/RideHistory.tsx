@@ -90,16 +90,32 @@ export default function RideHistory() {
       </div>
 
       <div className="flex flex-wrap items-start gap-3">
-        <div className="flex flex-col gap-1">
-          <Input
-            placeholder="Search location..."
-            value={searchTerm}
-            onChange={(e) => {
-              setPage(1);
-              setSearchTerm(e.target.value);
-            }}
-            className="w-64"
-          />
+        <div className="w-64 flex flex-col gap-1">
+          <div className="relative">
+            <Input
+              placeholder="Search location..."
+              value={searchTerm}
+              onChange={(e) => {
+                setPage(1);
+                setSearchTerm(e.target.value);
+              }}
+              className="pr-6"
+            />
+
+            {searchTerm && (
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSearchTerm("");
+                  setPage(1);
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer select-none"
+              >
+                ✕
+              </span>
+            )}
+          </div>
+
           <span className="text-[10px] text-muted-foreground ml-1">
             Search applies to pickup and destination field only
           </span>
