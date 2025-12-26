@@ -1,19 +1,23 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import About from "@/pages/About";
-import Analytics from "@/pages/admin/Analytics";
-import Rides from "@/pages/admin/Rides";
-import Users from "@/pages/admin/Users";
+import About from "@/pages/About"
 import Contact from "@/pages/Contact";
-import Earnings from "@/pages/driver/Earnings";
-import Requests from "@/pages/driver/Requests";
 import FAQ from "@/pages/FAQ";
 import Features from "@/pages/Features";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import RequestRide from "@/pages/rider/RequestRide";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
+import { adminSidebarItems } from "./adminSidebarItems";
+import { generateRoutes } from "@/utils/generateRoutes";
+import { riderSidebarItems } from "./riderSidebarItems";
+import { driverSidebarItems } from "./driverSidebarItems";
+import Unauthorized from "@/pages/Unauthorized";
+import { withAuth } from "@/utils/withAuth";
+import { role } from "@/constants/role";
+import type { TRole } from "@/types";
+import AccountStatus from "@/pages/AccountStatus";
+import RideDetails from "@/pages/RideDetails";
 
 export const router = createBrowserRouter([
     {
@@ -48,48 +52,57 @@ export const router = createBrowserRouter([
                 Component: Register,
                 path: '/register'
             },
+            {
+                Component: Unauthorized,
+                path: '/unauthorized'
+            },
+            {
+                Component: AccountStatus,
+                path: '/account-status'
+            },
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout),
+        path: "/",
+        children: [
+            {
+                path: "rides/:rideId",
+                Component: RideDetails,
+            },
+        ],
+    },
+    {
+        Component: withAuth(DashboardLayout, role.superAdmin as TRole),
         path: "/admin",
         children: [
             {
-                Component: Analytics,
-                path: 'analytics'
+                index: true,
+                element: <Navigate to="/admin/analytics" />
             },
-            {
-                Component: Users,
-                path: 'users'
-            },
-            {
-                Component: Rides,
-                path: 'rides'
-            }
+            ...generateRoutes(adminSidebarItems)
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout, role.rider as TRole),
         path: "/rider",
         children: [
             {
-                Component: RequestRide,
-                path: 'request-ride'
-            }
+                index: true,
+                element: <Navigate to="/rider/live-ride-tracking" />
+            },
+            ...generateRoutes(riderSidebarItems)
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout, role.driver as TRole),
         path: "/driver",
         children: [
             {
-                Component: Earnings,
-                path: 'earnings'
+                index: true,
+                element: <Navigate to="/driver/earnings" />
             },
-            {
-                Component: Requests,
-                path: 'requests'
-            }
+            ...generateRoutes(driverSidebarItems)
         ]
     }
 ]);

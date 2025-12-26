@@ -1,0 +1,5 @@
+export const APPROVAL_STATUS = {
+    PENDING: "PENDING",
+    APPROVED: "APPROVED",
+    SUSPEND: "SUSPEND",
+};
