@@ -52,6 +52,12 @@ export const driverApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [{ type: "DRIVER", id: "DRIVER_LIST" }],
         }),
+        getMyEarningStats: build.query({
+            query: () => ({
+                url: "/stats/driver/me",
+                method: "GET",
+            }),
+        }),
     }),
 });
 
@@ -61,4 +67,5 @@ export const {
     useGetAllDriversQuery,
     useApproveDriverMutation,
     useSuspendDriverMutation,
+    useGetMyEarningStatsQuery
 } = driverApi;
