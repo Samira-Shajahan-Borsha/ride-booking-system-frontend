@@ -34,7 +34,32 @@ export const adminApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [{ type: "RIDER", id: "RIDER_LIST" }],
         }),
+        getUserStats: build.query({
+            query: () => ({
+                url: "/stats/user",
+                method: "GET",
+            }),
+        }),
+        getDriverStats: build.query({
+            query: () => ({
+                url: "/stats/driver",
+                method: "GET",
+            }),
+        }),
+        getRideStats: build.query({
+            query: () => ({
+                url: "/stats/ride",
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const { useGetAllRidersQuery, useBlockRiderMutation, useUnblockRiderMutation } = adminApi;
+export const {
+    useGetAllRidersQuery,
+    useBlockRiderMutation,
+    useUnblockRiderMutation,
+    useGetUserStatsQuery,
+    useGetDriverStatsQuery,
+    useGetRideStatsQuery,
+} = adminApi;
