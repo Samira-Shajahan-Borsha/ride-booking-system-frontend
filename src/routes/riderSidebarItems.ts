@@ -1,5 +1,4 @@
 import LiveRideTracking from "@/pages/rider/LiveRideTracking";
-import RideDetails from "@/pages/rider/RideDetails";
 import RideHistory from "@/pages/RideHistory";
 import RideRequestForm from "@/pages/rider/RideRequestForm";
 import type { ISidebarItems } from "@/types";
@@ -14,11 +13,6 @@ export const riderSidebarItems: ISidebarItems[] = [
         title: "Ride Request",
         url: "/rider/request-ride",
         Component: RideRequestForm,
-    },
-    {
-        title: "Ride Details",
-        url: "/rider/ride-details",
-        Component: RideDetails,
     },
     {
         title: "Ride History",

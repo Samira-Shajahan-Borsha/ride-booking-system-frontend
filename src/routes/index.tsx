@@ -81,18 +81,18 @@ export const router = createBrowserRouter([
                         Component: EditProfile,
                     },
                 ],
-            }
-        ]
-    },
-    {
-        Component: withAuth(DashboardLayout),
-        path: "/",
-        children: [
-            {
-                path: "rides/:rideId",
-                Component: RideDetails,
             },
-        ],
+            {
+                Component: withAuth(RideDetails),
+                path: "/",
+                children: [
+                    {
+                        path: "rides/:rideId",
+                        Component: RideDetails,
+                    },
+                ],
+            },
+        ]
     },
     {
         Component: withAuth(DashboardLayout, role.superAdmin as TRole),
