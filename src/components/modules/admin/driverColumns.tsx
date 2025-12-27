@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { APPROVAL_STATUS } from "@/constants/approvalStatus";
 import { type ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Eye } from "lucide-react";
 
 export const approvalStatusColor = {
     [APPROVAL_STATUS.APPROVED]:
@@ -25,6 +25,13 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
         accessorKey: "user.email",
         header: "Email",
         cell: ({ row }) => <p className="text-sm text-muted-foreground">{row.original.user.email}</p>,
+    },
+    {
+        accessorKey: "vehicle",
+        header: "Vehicle",
+        cell: ({ row }) => (
+            <p className="text-sm text-muted-foreground">{row.original.vehicle ?? "N/A"}</p>
+        ),
     },
     {
         accessorKey: "approvalStatus",
@@ -54,7 +61,9 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
-            const { approvalStatus, _id } = row.original;
+
+            const driver = row.original;
+            const { approvalStatus, _id } = driver;
 
             return (
                 <div className="flex gap-2">
@@ -63,7 +72,6 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
                             <Button
                                 onClick={() => onActionClick("APPROVE", _id)}
                                 size="sm"
-                                variant="default"
                             >
                                 Approve
                             </Button>
@@ -81,7 +89,6 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
                         <Button
                             onClick={() => onActionClick("APPROVE", _id)}
                             size="sm"
-                            variant="default"
                         >
                             Approve
                         </Button>
@@ -100,7 +107,4 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
             );
         },
     }
-
-
-
 ];
