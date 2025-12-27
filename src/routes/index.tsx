@@ -18,6 +18,8 @@ import { role } from "@/constants/role";
 import type { TRole } from "@/types";
 import AccountStatus from "@/pages/AccountStatus";
 import RideDetails from "@/pages/RideDetails";
+import type { ComponentType } from "react";
+import ChangePassword from "@/pages/ChangePassoword";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +62,16 @@ export const router = createBrowserRouter([
                 Component: AccountStatus,
                 path: '/account-status'
             },
+            {
+                Component: withAuth(ChangePassword),
+                path: "/",
+                children: [
+                    {
+                        path: "change-password",
+                        Component: ChangePassword,
+                    },
+                ],
+            }
         ]
     },
     {

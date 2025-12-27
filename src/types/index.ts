@@ -1,6 +1,12 @@
 import type { ComponentType } from "react";
 
-export type { IRegisterInfo, User, ILoginRes, ILoginInfo } from "@/types/auth.type";
+export type {
+    IRegisterInfo,
+    User,
+    ILoginRes,
+    ILoginInfo,
+    IChangePasswordInfo,
+} from "@/types/auth.type";
 
 export type { IRideInfo, IRide } from "@/types/ride.type";
 

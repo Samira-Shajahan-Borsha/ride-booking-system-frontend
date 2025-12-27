@@ -1,7 +1,7 @@
 import {
   BoltIcon,
   BookOpenIcon,
-  Layers2Icon,
+  KeyRoundIcon,
   LogOutIcon,
   PinIcon,
   UserPenIcon,
@@ -28,6 +28,7 @@ import { useGetMyDriverProfileQuery, useUpdateAvailableStatusMutation } from "@/
 import { role } from "@/constants/role";
 import { driverAvailabilityStatus } from "@/constants/driverAvailabilityStatus";
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 export default function UserMenu() {
   const dispatch = useAppDispatch();
@@ -135,10 +136,13 @@ export default function UserMenu() {
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Option 1</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 2</span>
-          </DropdownMenuItem>
+          <Link to='/change-password'>
+            <DropdownMenuItem
+            >
+              <KeyRoundIcon size={16} className="opacity-60" />
+              <span>Change Password</span>
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem>
             <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Option 3</span>
@@ -155,14 +159,13 @@ export default function UserMenu() {
             <span>Option 5</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-
         <DropdownMenuSeparator />
-
         <DropdownMenuItem onClick={handleLogout}>
           <LogOutIcon size={16} className="opacity-60" />
           <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu >
+
   );
 }

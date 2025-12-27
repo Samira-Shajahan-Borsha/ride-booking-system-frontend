@@ -10,6 +10,11 @@ export interface ILoginInfo {
     password: string;
 }
 
+export interface IChangePasswordInfo {
+    oldPassword: string;
+    newPassword: string;
+}
+
 export interface Auth {
     provider: string;
     providerId: string;

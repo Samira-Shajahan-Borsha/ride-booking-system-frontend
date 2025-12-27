@@ -78,7 +78,6 @@ export function LoginForm() {
                     message: "The email or password you entered is incorrect.",
                 });
             }
-
         }
     }
 
@@ -116,7 +115,6 @@ export function LoginForm() {
                             control={form.control}
                             name="password"
                             render={({ field }) => (
-
                                 <FormItem>
                                     <div className="flex justify-between items-center">
                                         <FormLabel>Password</FormLabel>
