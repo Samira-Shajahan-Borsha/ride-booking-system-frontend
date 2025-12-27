@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { APPROVAL_STATUS } from "@/constants/approvalStatus";
 import { type ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { ChevronsUpDown, Eye } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 
 export const approvalStatusColor = {
     [APPROVAL_STATUS.APPROVED]:

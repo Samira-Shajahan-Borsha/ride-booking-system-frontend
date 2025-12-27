@@ -41,7 +41,7 @@ const RideDetails = () => {
 
           <div>
             <p className="text-sm text-muted-foreground">Fare</p>
-            <p className="font-semibold">৳{ride?.fare}</p>
+            <p className="font-semibold">{ride?.fare} Tk</p>
           </div>
 
           <div>
