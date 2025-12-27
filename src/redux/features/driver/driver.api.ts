@@ -58,6 +58,14 @@ export const driverApi = baseApi.injectEndpoints({
                 method: "GET",
             }),
         }),
+        updateVehicle: build.mutation<IResponse<IDriver>, { vehicle: string }>({
+            query: (data) => ({
+                url: `/drivers/vehicle`,
+                method: "PATCH",
+                data,
+            }),
+            invalidatesTags: ["DRIVER"],
+        }),
     }),
 });
 
@@ -67,5 +75,6 @@ export const {
     useGetAllDriversQuery,
     useApproveDriverMutation,
     useSuspendDriverMutation,
-    useGetMyEarningStatsQuery
+    useGetMyEarningStatsQuery,
+    useUpdateVehicleMutation,
 } = driverApi;
