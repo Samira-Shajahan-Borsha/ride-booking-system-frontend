@@ -126,16 +126,17 @@ export default function UserMenu() {
                 disabled={isUpdating}
               />
             </DropdownMenuItem>
-
             <DropdownMenuSeparator />
           </>
         )}
-
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 1</span>
-          </DropdownMenuItem>
+          <Link to="/edit-profile">
+            <DropdownMenuItem>
+              <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
+              <span>Edit Profile</span>
+            </DropdownMenuItem>
+          </Link>
+
           <Link to='/change-password'>
             <DropdownMenuItem
             >
