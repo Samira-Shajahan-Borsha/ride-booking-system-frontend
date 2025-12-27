@@ -51,7 +51,6 @@ export default function RideHistory() {
   };
 
   if (
-    isAdmin &&
     dateRange?.from &&
     dateRange?.to &&
     dateRange.from.getTime() !== dateRange.to.getTime()
@@ -138,45 +137,43 @@ export default function RideHistory() {
           </SelectContent>
         </Select>
 
-        {isAdmin && (
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-[260px] justify-start text-left font-normal flex items-center gap-2"
-              >
-                <CalendarIcon className="h-4 w-4" />
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-[260px] justify-start text-left font-normal flex items-center gap-2"
+            >
+              <CalendarIcon className="h-4 w-4" />
 
-                <span className="flex-1 truncate">{dateRangeText}</span>
+              <span className="flex-1 truncate">{dateRangeText}</span>
 
-                {dateRange?.from && dateRange?.to && (
-                  <span
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDateRange(undefined);
-                      setPage(1);
-                    }}
-                    className="text-muted-foreground hover:text-foreground cursor-pointer"
-                  >
-                    ✕
-                  </span>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="range"
-                numberOfMonths={1}
-                selected={dateRange}
-                disabled={(date) => date > new Date()}
-                onSelect={(range) => {
-                  setPage(1);
-                  setDateRange(range);
-                }}
-              />
-            </PopoverContent>
-          </Popover>
-        )}
+              {dateRange?.from && dateRange?.to && (
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDateRange(undefined);
+                    setPage(1);
+                  }}
+                  className="text-muted-foreground hover:text-foreground cursor-pointer"
+                >
+                  ✕
+                </span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="range"
+              numberOfMonths={1}
+              selected={dateRange}
+              disabled={(date) => date > new Date()}
+              onSelect={(range) => {
+                setPage(1);
+                setDateRange(range);
+              }}
+            />
+          </PopoverContent>
+        </Popover>
       </div>
 
       <DataTable columns={getRideColumns(toggleSort, isAdmin, navigate)} data={data?.data ?? []} />
