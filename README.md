@@ -16,7 +16,7 @@ This frontend application enables a complete ride-booking experience with role-b
 
 ## 🌐 Live Deployment
 
-**Frontend URL:** [Live Link](https://frontend-ride-booking-system.vercel.app/)
+**Frontend URL:** [https://frontend-ride-booking-system.vercel.app/](https://frontend-ride-booking-system.vercel.app/)
 
 **Backend URL:** [https://backend-ride-booking-system-ecru.vercel.app/](https://backend-ride-booking-system-ecru.vercel.app/)
 
