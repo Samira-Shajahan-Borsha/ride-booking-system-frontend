@@ -55,6 +55,14 @@ export const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["USER"],
         }),
+        submitMessage: build.mutation({
+            query: (data) => ({
+                url: "/contacts/message",
+                method: "POST",
+                data: data,
+            }),
+            invalidatesTags: ["USER"],
+        }),
     }),
 });
 
@@ -65,4 +73,5 @@ export const {
     useLogoutMutation,
     useChangePasswordMutation,
     useUpdateProfileMutation,
+    useSubmitMessageMutation,
 } = authApi;

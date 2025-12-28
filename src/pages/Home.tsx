@@ -6,6 +6,7 @@ import { Link } from "react-router";
 
 import heroImage from "@/assets/photo-1731082154898-2e63df0f2a42.webp";
 import offerImage from "@/assets/photo-1536825591064-574efec257f2.webp";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.Api";
 
 const howItWorksSteps = [
   {
@@ -25,27 +26,26 @@ const howItWorksSteps = [
   },
 ];
 
-const testimonials =
-  [
-    {
-      role: "Rider",
-      message:
-        "Booking a ride is effortless. I love seeing the fare upfront and tracking my driver in real time.",
-      name: "Rider • Verified",
-    },
-    {
-      role: "Driver",
-      message:
-        "The earnings dashboard is clear and motivating. I can track daily and monthly income without confusion.",
-      name: "Driver • Verified",
-    },
-    {
-      role: "Admin",
-      message:
-        "Managing users and monitoring rides from a single dashboard saves hours every day.",
-      name: "Admin • Verified",
-    },
-  ]
+const testimonials = [
+  {
+    role: "Rider",
+    message:
+      "Booking a ride is effortless. I love seeing the fare upfront and tracking my driver in real time.",
+    name: "Rider • Verified",
+  },
+  {
+    role: "Driver",
+    message:
+      "The earnings dashboard is clear and motivating. I can track daily and monthly income without confusion.",
+    name: "Driver • Verified",
+  },
+  {
+    role: "Admin",
+    message:
+      "Managing users and monitoring rides from a single dashboard saves hours every day.",
+    name: "Admin • Verified",
+  },
+];
 
 const Highlight = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => {
   return (
@@ -62,6 +62,9 @@ const Highlight = ({ icon, title, description }: { icon: React.ReactNode; title:
 }
 
 const Home = () => {
+  
+  const { data: user } = useUserInfoQuery(null);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* HERO SECTION */}
@@ -75,14 +78,16 @@ const Home = () => {
             <p className="text-muted-foreground text-lg">
               Fast, reliable, and affordable rides — built for riders, drivers, and admins with real‑time tracking and seamless payments.
             </p>
-            <div className="flex gap-4">
-              <Link to="/login">
-                <Button size="lg">Login</Button>
-              </Link>
-              <Link to="/register">
-                <Button size="lg" variant="outline">Register</Button>
-              </Link>
-            </div>
+            {!user?.data &&
+              <div className="flex gap-4">
+                <Link to="/login">
+                  <Button size="lg">Login</Button>
+                </Link>
+                <Link to="/register">
+                  <Button size="lg" variant="outline">Register</Button>
+                </Link>
+              </div>
+            }
           </div>
 
           {/* Image Placeholder */}
@@ -164,14 +169,16 @@ const Home = () => {
               <p className="text-muted-foreground text-lg">
                 Enjoy discounted rides for new users and exclusive bonus earnings for new drivers during your first weeks.
               </p>
-              <div className="flex gap-4">
-                <Link to="/login">
-                  <Button size="lg">Claim Rider Offer</Button>
-                </Link>
-                <Link to="/login">
-                  <Button size="lg" variant="outline">Driver Bonuses</Button>
-                </Link>
-              </div>
+              {!user?.data &&
+                <div className="flex gap-4">
+                  <Link to="/login">
+                    <Button size="lg">Claim Rider Offer</Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button size="lg" variant="outline">Driver Bonuses</Button>
+                  </Link>
+                </div>
+              }
             </div>
             <div className="rounded-2xl border bg-muted flex items-center justify-center text-muted-foreground">
               <img src={offerImage} alt="hero-img" className="rounded-2xl" />
@@ -228,11 +235,13 @@ const Home = () => {
             Join as a rider or driver and experience a smarter ride-sharing platform.
           </p>
           <div className="flex justify-center gap-4">
-            <Link to="/register">
-              <Button size="lg">
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            {!user?.data &&
+              <Link to="/register">
+                <Button size="lg">
+                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            }
           </div>
         </div>
       </section>

@@ -2,7 +2,6 @@ import App from "@/App";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import About from "@/pages/About"
 import Contact from "@/pages/Contact";
-import FAQ from "@/pages/FAQ";
 import Features from "@/pages/Features";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -20,6 +19,7 @@ import AccountStatus from "@/pages/AccountStatus";
 import RideDetails from "@/pages/RideDetails";
 import EditProfile from "@/pages/EditProfile";
 import ChangePassword from "@/pages/ChangePassword";
+import Faq from "@/pages/Faq";
 
 export const router = createBrowserRouter([
     {
@@ -43,24 +43,24 @@ export const router = createBrowserRouter([
                 path: 'contact'
             },
             {
-                Component: FAQ,
+                Component: Faq,
                 path: 'faq'
             },
             {
                 Component: Login,
-                path: '/login'
+                path: 'login'
             },
             {
                 Component: Register,
-                path: '/register'
+                path: 'register'
             },
             {
                 Component: Unauthorized,
-                path: '/unauthorized'
+                path: 'unauthorized'
             },
             {
                 Component: AccountStatus,
-                path: '/account-status'
+                path: 'account-status'
             },
             {
                 Component: withAuth(ChangePassword),
