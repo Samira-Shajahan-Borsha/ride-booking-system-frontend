@@ -26,6 +26,7 @@ import { role } from "@/constants/role";
 import { driverAvailabilityStatus } from "@/constants/driverAvailabilityStatus";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
+import Cookies from 'js-cookie';
 
 export default function UserMenu() {
   const dispatch = useAppDispatch();
@@ -48,6 +49,8 @@ export default function UserMenu() {
   }, [driverProfile?.data?.isAvailable]);
 
   const handleLogout = async () => {
+    Cookies.remove('accessToken', { path: '/', domain: '.vercel.app' });
+    Cookies.remove('refreshToken', { path: '/', domain: '.vercel.app' });
     await logout(null);
     dispatch(authApi.util.resetApiState());
   };

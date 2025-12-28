@@ -39,6 +39,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.544.0",
     "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
@@ -57,6 +58,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^24.6.1",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
