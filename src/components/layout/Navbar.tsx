@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <header className="border-b px-4 md:px-6 sticky top-0 z-50 bg-background">
-      <div className="flex h-16 items-center justify-between gap-4 container mx-auto">
+      <div className="flex h-16 items-center justify-between gap-4 max-w-7xl mx-auto">
         {/* Left side */}
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}

@@ -118,12 +118,12 @@ export function LoginForm() {
                                 <FormItem>
                                     <div className="flex justify-between items-center">
                                         <FormLabel>Password</FormLabel>
-                                        <Link
-                                            to="/"
+                                        <Button
+                                            variant="link"
                                             className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                                         >
                                             Forgot your password?
-                                        </Link>
+                                        </Button>
                                     </div>
                                     <FormControl>
                                         <Password {...field} />
