@@ -71,6 +71,7 @@ export const getRiderColumns = (onActionClick: (type: "BLOCK" | "UNBLOCK", id: s
                     size="sm"
                     variant={isActive === "ACTIVE" ? "destructive" : "default"}
                     onClick={() => onActionClick(isActive === "ACTIVE" ? "BLOCK" : "UNBLOCK", _id)}
+                    className="h-7 px-2 text-xs"
                 >
                     {isActive === "ACTIVE" ? "Block" : "Unblock"}
                 </Button>

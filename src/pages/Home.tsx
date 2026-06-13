@@ -69,7 +69,7 @@ const Home = () => {
     <main className="min-h-screen bg-background text-foreground">
       {/* HERO SECTION */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <Badge variant="secondary" className="w-fit">Ride smarter</Badge>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">

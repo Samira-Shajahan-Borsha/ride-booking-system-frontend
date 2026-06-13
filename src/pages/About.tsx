@@ -37,7 +37,7 @@ export default function About() {
 
       {/* MISSION */}
       <section className="py-24 bg-muted/30">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card className="rounded-2xl">
             <CardContent className="p-8 space-y-4">
               <Target className="h-8 w-8 text-primary" />

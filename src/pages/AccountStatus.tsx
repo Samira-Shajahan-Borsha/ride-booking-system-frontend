@@ -66,9 +66,15 @@ const AccountStatus = () => {
   });
 
   const handleLogout = async () => {
-    await logout(null);
-    dispatch(authApi.util.resetApiState());
-    navigate("/login", { replace: true });
+    try {
+      await logout(null).unwrap();
+
+      dispatch(authApi.util.resetApiState());
+
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.log("Logout failed:", error);
+    }
   };
 
   if (isUserLoading || isDriverLoading) return null;

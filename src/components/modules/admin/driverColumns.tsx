@@ -72,6 +72,7 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
                             <Button
                                 onClick={() => onActionClick("APPROVE", _id)}
                                 size="sm"
+                                className="h-7 px-2 text-xs"
                             >
                                 Approve
                             </Button>
@@ -79,6 +80,7 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
                                 onClick={() => onActionClick("SUSPEND", _id)}
                                 size="sm"
                                 variant="destructive"
+                                className="h-7 px-2 text-xs"
                             >
                                 Suspend
                             </Button>
@@ -89,6 +91,7 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
                         <Button
                             onClick={() => onActionClick("APPROVE", _id)}
                             size="sm"
+                             className="h-7 px-2 text-xs"
                         >
                             Approve
                         </Button>
@@ -99,6 +102,7 @@ export const getDriverColumns = (onActionClick: (type: "APPROVE" | "SUSPEND", id
                             onClick={() => onActionClick("SUSPEND", _id)}
                             size="sm"
                             variant="destructive"
+                             className="h-7 px-2 text-xs"
                         >
                             Suspend
                         </Button>
