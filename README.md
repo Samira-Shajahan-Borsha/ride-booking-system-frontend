@@ -1,51 +1,34 @@
 # Ride Booking System Frontend
 
-A modern, responsive, and user-friendly frontend for a comprehensive ride booking platform. Built with **React**, **TypeScript**, and **Tailwind CSS**, it provides seamless experiences for riders, drivers, and administrators.
+A polished, mobile-first frontend for a full ride booking platform built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**. The app combines a public marketing shell, secure auth flows, and role-aware dashboard layouts to support riders, drivers, and administrators in one unified experience.
 
 ---
 
 ## 🎯 Project Overview
 
-This frontend application enables a complete ride-booking experience with role-based interfaces and real-time features. It supports three distinct user types with specialized dashboards and functionality:
+This app delivers a complete ride-booking workflow with strict role-based access control, real-time status updates, and analytics dashboards. It uses `react-router` for public and protected routes, `Redux Toolkit` + `RTK Query` for data fetching and state management, and custom layouts for public pages and dashboard views.
 
--   **Riders** can request rides, track live progress, view history, and manage their profiles.
--   **Drivers** can accept incoming ride requests, manage availability, track earnings, and update ride statuses.
--   **Admins** can oversee all users, manage driver approvals, monitor rides, and access analytics dashboards.
-
----
-
-## 🌐 Live Deployment
-
-**Frontend URL:** [https://frontend-ride-booking-system.vercel.app/](https://frontend-ride-booking-system.vercel.app/)
-
-**Backend URL:** [https://backend-ride-booking-system-ecru.vercel.app/](https://backend-ride-booking-system-ecru.vercel.app/)
+-   **Riders** can request rides with pickup/destination inputs, distance and fare details, payment method selection, and active ride tracking with live status, driver info, and cancellation support.
+-   **Drivers** can toggle availability, review incoming ride requests, accept rides, manage active ride status changes, and monitor earnings across today, weekly, monthly, and total metrics.
+-   **Admins** can review user and driver lists, monitor ride history, approve or suspend drivers, and view analytics with charts for user roles, approval status, ride volume, and revenue trends.
 
 ---
 
-## 🔑 Test Credentials
+## 🌐 Live API & Repository
 
-Use these accounts to test the application:
+- **Frontend Live:** [https://frontend-ride-booking-system.vercel.app/](https://frontend-ride-booking-system.vercel.app/)
+- **Server Live:** [https://backend-ride-booking-system-ecru.vercel.app](https://backend-ride-booking-system-ecru.vercel.app)
+- **Frontend Repository:** [https://github.com/Samira-Shajahan-Borsha/ride-booking-system-frontend](https://github.com/Samira-Shajahan-Borsha/ride-booking-system-frontend)
 
-### Super Admin
+---
 
-```
-Email: super@gmail.com
-Password: 12345678
-```
+## 🔐 Test Credentials (for local/dev testing)
 
-### Driver
-
-```
-Email: arif@gmail.com
-Password: 1234@Arif
-```
-
-### Rider
-
-```
-Email: ayon@gmail.com
-Password: 1234@Ayon
-```
+| Role        | Email           | Password  |
+| ----------- | --------------- | --------- |
+| Super Admin | super@gmail.com | 12345678  |
+| Driver      | arif@gmail.com  | 1234@Arif |
+| Rider       | ayon@gmail.com  | 1234@Ayon |
 
 ---
 
